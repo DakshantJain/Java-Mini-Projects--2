@@ -1,0 +1,124 @@
+import jdk.jfr.Percentage;
+
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.TimerTask;
+
+class Student{
+
+
+    private String Name;
+    private int RollNumber;
+    private double Grade;
+    private int Fee;
+
+    public Student(String Name,int RollNumber,double Grade, int Fee){
+        this.Name = Name;
+        this.RollNumber = RollNumber;
+        this.Grade = Grade;
+        this.Fee = Fee;
+    }
+
+
+    public void setFee(){
+        this.Fee = Fee;
+    }
+     public int getFee(){
+        return Fee;
+    }
+    public String getName(){
+        return Name;
+    }
+    public int getRollNumber(){
+        return RollNumber;
+    }
+
+    public double getGrade(){
+        return Grade;
+    }
+    public void setGrade(double Grade){
+        this.Grade = Grade;
+    }
+}
+public class Student_Management_System {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        ArrayList<Student> students = new ArrayList<>();
+
+        while(true){
+            System.out.println("Student Management System :- ");
+            System.out.println("1. Add Student(s)");
+            System.out.println("2. Edit Student Details :- ");
+            System.out.println("3. Generate Overall Report :- ");
+            System.out.println("4. See Students Details ");
+            System.out.println("5. Exit");
+
+            int User_Choice = sc.nextInt();
+
+            switch (User_Choice) {
+                case 1:
+                    System.out.println("Enter the name of the student :- ");
+                    sc.nextLine();
+                    String Name = sc.nextLine();
+                    System.out.println("Enter the RollNumber of the student :- ");
+                    int RollNumber = sc.nextInt();
+                    System.out.println("Enter the fee Of the current Semester :- ");
+                    int Fee = sc.nextInt();
+                    try{
+                        System.out.println("Payment Successful");
+                    }
+                    catch(ArithmeticException e){
+                        System.out.println("Error Occured !! The Amount Isn't Accurate");
+                    }
+                    students.add(new Student(Name, RollNumber,0.0,45000));
+
+                    break;
+                case 2:
+                    System.out.println("Enter the roll number to edit :- ");
+                    int RollNumberToEdit = sc.nextInt();
+                    System.out.println("Enter the new grade :- ");
+                    double newGrade = sc.nextDouble();
+                    for (Student student : students) {
+                        if (student.getRollNumber() == RollNumberToEdit) {
+                            student.setGrade(newGrade);
+                            System.out.println("Grade Upgraded Successfully.");
+                        }
+                    }
+                    break;
+                case 3:
+                    System.out.println("Enter the total number of Subjects :- ");
+                    int TotalSubj = sc.nextInt();
+                    System.out.println("Enter the marks :- ");
+                    int SubjMarks[] = new int[TotalSubj];
+                    for(int i = 0;i<TotalSubj;i++){
+                        System.out.println("Ente the marks for subject " + (i+1) + " : ");
+                        SubjMarks[i] = sc.nextInt();
+                    }
+                    int ScoredMarks = 0;
+                    int TotalMarks = (TotalSubj*100);
+                    for(int i = 0;i<TotalSubj;i++){
+                          ScoredMarks += SubjMarks[i];
+                    }
+                   float Percentage = ((float) ScoredMarks/TotalMarks)*100;
+                    System.out.println(Percentage + "%");
+                    break;
+                case 4:
+                   for(Student Bacche: students){
+                       System.out.println(Bacche.getName());
+                       System.out.println(Bacche.getRollNumber());
+                       System.out.println(Bacche.getGrade());
+                       if(Bacche.getFee()==45000){
+                           System.out.println("Fee Paid.");
+                       }
+                       else{
+                           System.out.println("Fee Is Pending.");
+                       }
+                   }
+                case 5:
+                    System.exit(0);
+                default:
+                    System.out.println("Invalid Choice !!");
+            }
+        }
+    }
+}
